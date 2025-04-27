@@ -1,73 +1,20 @@
-import { Account, AuthOptions, ISODateString } from "next-auth";
+import NextAuth, { AuthOptions, JWT } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import { LOGIN_URL } from "@/lib/apiAuthRoutes";
 
-export interface CustomSession {
-  user?: CustomUser;
-  expires: ISODateString;
-}
 export interface CustomUser {
-  id?: string | null;
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-  provider?: string | null;
-  token?: string | null;
+  id?: string;
+  name?: string;
+  email?: string;
+  image?: string;
+  provider?: string;
+  token?: string;
 }
 
 export const authOptions: AuthOptions = {
-  pages: {
-    signIn: "/",
-  },
-  callbacks: {
-    async signIn({
-      user,
-      account,
-    }: {
-      user: CustomUser;
-      account: Account | null;
-    }) {
-      try {
-        console.log("The user data is:", user);
-        console.log("The account data is:", account);
-
-        const payload = {
-          email: user.email,
-          name: user.name,
-          oauth_id: account?.providerAccountId,
-          provider: account?.provider,
-          image: user?.image,
-        };
-
-        const { data } = await axios.post(LOGIN_URL, payload);
-        user.id = data?.user?.id.toString();
-        user.token = data?.user?.token;
-        user.provider = data?.user?.provider;
-        return true;
-      } catch (error) {
-        return error;
-      }
-    },
-    async session({
-      session,
-      user,
-      token,
-    }: {
-      session: CustomSession;
-      user: CustomUser;
-      token: JWT;
-    }) {
-      session.user = token.user as CustomUser;
-      return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
-  },
+  pages: { signIn: "/" },
+  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -81,4 +28,46 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    // 1) Persist your backend token into the NextAuth JWT
+    async jwt({ token, user, account }) {
+      // On initial sign-in (account is non-null), call your backend
+      if (account && user) {
+        // build payload from the Google user info
+        const payload = {
+          email: user.email,
+          name: user.name,
+          oauth_id: account.providerAccountId,
+          provider: account.provider,
+          image: user.image,
+        };
+        try {
+          const { data } = await axios.post(LOGIN_URL, payload);
+          // store everything you need
+          token.user = {
+            id: data.user.id.toString(),
+            name: user.name!,
+            email: user.email!,
+            image: user.image!,
+            provider: account.provider,
+            token: data.user.token,    // <— your backend JWT
+          } as CustomUser;
+        } catch (err) {
+          console.error("Error logging into backend:", err);
+          // you can decide to throw or just leave `token.user` undefined
+        }
+      }
+      return token;
+    },
+
+    // 2) Copy your custom user (with token) into the session
+    async session({ session, token }) {
+      if (token.user) {
+        session.user = token.user as CustomUser;
+      }
+      return session;
+    },
+  },
 };
+
+export default NextAuth(authOptions);

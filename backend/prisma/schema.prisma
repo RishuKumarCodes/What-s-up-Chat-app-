@@ -9,13 +9,35 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(191)
-  email      String   @unique @db.VarChar(191)
-  provider   String   @db.VarChar(191)
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(191)
+  email      String      @unique @db.VarChar(191)
+  provider   String      @db.VarChar(191)
   image      String?
-  oauth_id   String   @unique
-  created_at DateTime @default(now())
+  oauth_id   String      @unique
+  created_at DateTime    @default(now())
+  ChatGroup  ChatGroup[]
 
   @@map("users")
+}
+
+model ChatGroup {
+  id         String       @id @default(uuid()) @db.Uuid
+  user_id    Int
+  user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  title      String       @db.VarChar(191)
+  passcode   String       @db.VarChar(30)
+  created_at DateTime     @default(now())
+  GroupUsers GroupUsers[]
+
+  @@index([created_at])
+  @@map("chat_groups")
+}
+
+model GroupUsers {
+  id         Int       @id @default(autoincrement())
+  group_id   String    @db.Uuid
+  group      ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  name       String    @db.VarChar(191)
+  created_at DateTime  @default(now())
 }
