@@ -4,27 +4,28 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="flex-1 flex flex-col items-center justify-center text-center p-12 bg-gradient-to-b from-gray-50 to-white">
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
-        Instant Chat Links for Seamless Conversations
-      </h1>
-      <p className="text-xl text-gray-600 mb-8">
-        QuickChat makes it effortless to create secure chat links and start
-        conversations in seconds.
-      </p>
-      <Link href="/dashboard">
-        <Button size="lg" className="animate-pulse">
-          Start Chatting
-        </Button>
-      </Link>
+    <section
+      className="relative text-center p-12 bg-cover bg-center bg-no-repeat h-screen flex-col items-center content-center"
+      style={{ backgroundImage: "url('/images/HeroSectionBg.jpg')" }}
+    >
+      {/* Optional overlay to improve text visibility */}
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-0"></div>
 
-      <div className="mt-12 w-full max-w-5xl flex justify-center">
-        {/* Placeholder for Illustration/Image */}
-        <img
-          src="/images/conversation.svg"
-          alt="Illustration"
-          className="w-full h-auto"
-        />
+      {/* Content goes here */}
+      <div className="relative z-10 flex">
+        <div className="flex-1 ">
+          <h1 className="text-[10vw] font-semibold">Message</h1>
+          <h1 className="text-[10vw] font-semibold">privately</h1>
+        </div>
+
+        <div className="flex-1 flex-col content-center items-center">
+          <Link
+            href="/dashboard"
+            className="bg-rose-600 p-8 px-10 text-xl font-semibold text-white hover:bg-black transition-colors rounded-full"
+          >
+            Start Chatting
+          </Link>
+        </div>
       </div>
     </section>
   );

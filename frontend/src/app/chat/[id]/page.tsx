@@ -19,7 +19,7 @@ export default async function page({ params }: { params: { id: string } }) {
   const chats: Array<MessageType> | [] = await fetchChats(params.id);
   console.log("the group id is :", params?.id);
   return (
-    <div>
+    <div className="overflow-hidden h-screen bg-[#F3F3F3] ">
       <ChatBase users={users} group={group} oldMessages={chats} />
     </div>
   );

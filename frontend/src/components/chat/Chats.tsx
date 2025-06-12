@@ -22,9 +22,11 @@ export default function Chats({
     const socket = getSocket();
     socket.auth = {
       room: group.id,
+      type:"group",
     };
     return socket.connect();
   }, []);
+
   useEffect(() => {
     socket.on("message", (data: MessageType) => {
       console.log("The message is", data);
@@ -36,6 +38,7 @@ export default function Chats({
       socket.close();
     };
   }, []);
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -52,10 +55,10 @@ export default function Chats({
   };
 
   return (
-    <div className="flex flex-col h-[94vh]  p-4">
+    <div className="flex flex-col h-[94vh] pt-0 p-4">
       <div className="flex-1 overflow-y-auto flex flex-col-reverse">
         <div ref={messagesEndRef} />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 pt-4">
           {messages.map((message) => (
             <div
               key={message.id}

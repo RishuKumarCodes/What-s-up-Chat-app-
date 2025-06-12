@@ -6,3 +6,4 @@ export const LOGIN_URL = API_URL + "/auth/login";
 export const CHAT_GROUP = API_URL + "/chat-group";
 export const CHAT_GROUP_USERS = API_URL + "/chat-group-user";
 export const CHATS_URL = API_URL + "/chats";
+export const ALL_USERS = API_URL + "/all-users"

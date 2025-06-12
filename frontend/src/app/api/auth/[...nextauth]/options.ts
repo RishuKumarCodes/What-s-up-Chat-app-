@@ -1,7 +1,12 @@
-import NextAuth, { AuthOptions, JWT } from "next-auth";
+import NextAuth, { AuthOptions, ISODateString, JWT } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import { LOGIN_URL } from "@/lib/apiAuthRoutes";
+
+export interface CustomSession{
+  user:CustomUser,
+  expires:ISODateString
+}
 
 export interface CustomUser {
   id?: string;

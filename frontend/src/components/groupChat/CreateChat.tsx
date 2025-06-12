@@ -21,6 +21,7 @@ import axios, { AxiosError } from "axios";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
 import { clearCache } from "@/actions/common";
+import { SquarePen } from "lucide-react";
 
 export default function CreateChat({ user }: { user: CustomUser }) {
   const [open, setOpen] = useState(false);
@@ -61,7 +62,10 @@ export default function CreateChat({ user }: { user: CustomUser }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Create Chat</Button>
+        <div className="flex items-center justify-center gap-3 cursor-pointer mb-5 px-5 p-2 rounded-full hover:border-black border border-gray-200 w-fit transition-colors">
+          <SquarePen size={21}/>
+          <p className="font-semibold text-xl">Create Chat</p>
+        </div>
       </DialogTrigger>
       <DialogContent onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
