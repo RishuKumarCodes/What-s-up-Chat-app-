@@ -22,6 +22,6 @@ export function getPersonalSocket(other: number, me: number): Socket {
   const room = [other, me].sort().join("_");
   return io(Env.BACKEND_URL, {
     autoConnect: false,
-    auth: { room, type: "personal" },
+    auth: { room, type: "personal", userId: me },
   });
 }

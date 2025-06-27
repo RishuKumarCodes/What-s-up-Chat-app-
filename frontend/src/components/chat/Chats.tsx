@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
+import { ChatGroupType, GroupChatUserType, MessageType } from "../../../types";
 export default function Chats({
   group,
   oldMessages,
@@ -18,18 +19,18 @@ export default function Chats({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  let socket = useMemo(() => {
+  const socket = useMemo(() => {
     const socket = getSocket();
     socket.auth = {
       room: group.id,
-      type:"group",
+      type: "group",
+      userId: chatUser?.id,
     };
     return socket.connect();
-  }, []);
+  }, [group.id, chatUser?.id]);
 
   useEffect(() => {
     socket.on("message", (data: MessageType) => {
-      console.log("The message is", data);
       setMessages((prevMessages) => [...prevMessages, data]);
       scrollToBottom();
     });
@@ -37,7 +38,7 @@ export default function Chats({
     return () => {
       socket.close();
     };
-  }, []);
+  }, [socket]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

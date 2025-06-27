@@ -41,8 +41,8 @@ export default function DeleteChatGroup({
       }
       setLoading(false);
     } catch (error) {
+      console.error("Delete group failed:", error);
       setLoading(false);
-      toast.error("Somethign went wrong.please try again later.");
     }
   };
 

@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
+import { ChatGroupType } from "../../../types";
 
 export default function ChatUserDialog({
   open,
@@ -37,7 +38,7 @@ export default function ChatUserDialog({
         setOpen(false);
       }
     }
-  }, []);
+  }, [params, setOpen]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -53,7 +54,7 @@ export default function ChatUserDialog({
           JSON.stringify(data?.data)
         );
       } catch (error) {
-        toast.error("Something went wrong.please try again!");
+        console.error("Failed to join chat group:", error);
       }
     }
     if (group.passcode != state.passcode) {

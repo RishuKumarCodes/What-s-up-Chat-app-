@@ -13,7 +13,7 @@ export default function Navbar({ user }: { user: CustomUser | null }) {
           {!user ? (
             <LoginModal />
           ) : (
-            <Link href="/dashboard">
+            <Link href="/dashboard/group_chat">
               <Button className="bg-rose-200 p-6 px-8 rounded-full border border-rose-700 text-rose-700 hover:text-white hover:bg-rose-700">
                 Dashboard
               </Button>

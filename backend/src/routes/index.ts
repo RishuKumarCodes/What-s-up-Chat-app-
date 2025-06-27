@@ -6,6 +6,7 @@ import ChatGroupController from "../controllers/ChatGroupController";
 import ChatGroupUserController from "../controllers/ChatGroupUserController";
 import ChatsController from "../controllers/ChatsController";
 import AllUsers from "../controllers/AllUsers";
+import PersonalChatHistory from "../controllers/PersonalChatHistory";
 
 const router = Router();
 router.post("/auth/login", AuthController.login);
@@ -24,6 +25,8 @@ router.post("/chat-group-user", ChatGroupUserController.store);
 // * Chats
 router.get("/chats/:groupId", ChatsController.index);
 
-// users lists:
+// personal chat:
 router.get("/all-users", AllUsers.index);
+router.get("/private-chats", PersonalChatHistory)
+
 export default router;

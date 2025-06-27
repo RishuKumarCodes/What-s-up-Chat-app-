@@ -9,7 +9,6 @@ async function FetchAllUsers() {
   }
   const response = await res.json();
   if (response?.data) {
-    console.log(response.data)
     return response?.data;
   }
   return [];

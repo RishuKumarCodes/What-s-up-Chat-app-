@@ -1,20 +1,20 @@
-import NextAuth, { AuthOptions, ISODateString, JWT } from "next-auth";
+import NextAuth, { AuthOptions, ISODateString } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import { LOGIN_URL } from "@/lib/apiAuthRoutes";
 
-export interface CustomSession{
-  user:CustomUser,
-  expires:ISODateString
+export interface CustomSession {
+  user: CustomUser;
+  expires: ISODateString;
 }
 
 export interface CustomUser {
-  id?: string;
-  name?: string;
+  id: string;
+  name: string;
   email?: string;
   image?: string;
   provider?: string;
-  token?: string;
+  token: string;
 }
 
 export const authOptions: AuthOptions = {
@@ -55,7 +55,7 @@ export const authOptions: AuthOptions = {
             email: user.email!,
             image: user.image!,
             provider: account.provider,
-            token: data.user.token,    // <— your backend JWT
+            token: data.user.token, // <— your backend JWT
           } as CustomUser;
         } catch (err) {
           console.error("Error logging into backend:", err);

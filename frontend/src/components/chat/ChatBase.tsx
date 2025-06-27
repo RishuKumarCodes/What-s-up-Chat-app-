@@ -4,6 +4,7 @@ import ChatSidebar from "./ChatSidebar";
 import ChatNav from "./ChatNav";
 import ChatUserDialog from "./ChatUserDialog";
 import Chats from "./Chats";
+import { ChatGroupType, GroupChatUserType, MessageType } from "../../../types";
 
 export default function ChatBase({
   group,

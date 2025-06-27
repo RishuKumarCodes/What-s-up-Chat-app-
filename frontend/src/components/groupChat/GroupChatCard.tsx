@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Copy, Unlink2, MoveUpRight } from "lucide-react"; // Icons
+import { Eye, EyeOff, Copy, MoveUpRight } from "lucide-react"; // Icons
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 import GroupChatCardMenu from "./GroupChatCardMenu";
 import { toast } from "sonner";
 import Env from "@/lib/env";
+import { ChatGroupType } from "../../../types";
 
 export default function GroupChatCard({
   group,

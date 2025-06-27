@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UserAvatar from "../common/UserAvatar";
-import dynamic from "next/dynamic";
 import LogoutModal from "./LogoutModal";
 
 function ProfileMenu({ name, image }: { name: string; image?: string }) {

@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function HeroSection() {
@@ -20,7 +19,7 @@ export default function HeroSection() {
 
         <div className="flex-1 flex-col content-center items-center">
           <Link
-            href="/dashboard"
+            href="/dashboard/personal_chat"
             className="bg-rose-600 p-8 px-10 text-xl font-semibold text-white hover:bg-black transition-colors rounded-full"
           >
             Start Chatting

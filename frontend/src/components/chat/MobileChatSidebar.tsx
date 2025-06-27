@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { GroupChatUserType } from "../../../types";
 
 export default function MobileChatSidebar({
   users,

@@ -1,5 +1,6 @@
 import React from "react";
 import MobileChatSidebar from "./MobileChatSidebar";
+import { ChatGroupType, GroupChatUserType } from "../../../types";
 
 export default function ChatNav({
   chatGroup,
