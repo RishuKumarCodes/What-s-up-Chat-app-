@@ -15,7 +15,11 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://admin.socket.io"],
+    origin: [
+      "http://localhost:3000",
+      "https://admin.socket.io",
+      "https://what-s-up-chat-app.onrender.com",
+    ],
     credentials: true,
   },
   adapter: createAdapter(redis),
