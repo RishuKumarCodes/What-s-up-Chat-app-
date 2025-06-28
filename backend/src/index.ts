@@ -19,7 +19,7 @@ async function main() {
       origin: [
         "http://localhost:3000",
         "https://admin.socket.io",
-        "https://what-s-up-chat-app.onrender.com",
+        "https://what-s-up-chat-app.vercel.app",
       ],
       credentials: true,
     },
