@@ -28,6 +28,7 @@ export function setupSocket(io: Server) {
   // online_users | once on connect | newly connected user | Provide initial online list
 
   io.on("connection", (socket: CustomSocket) => {
+    console.log("🔌 New connection, handshake.auth =", socket.handshake.auth);
     const userId = socket.userId!;
     onlineUsers.set(userId, socket.id);
 
