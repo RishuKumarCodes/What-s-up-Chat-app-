@@ -40,16 +40,22 @@ function Chat({ other, me, onlineUserIds }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
-  const socket = useMemo(() => {
-    const s = getPersonalSocket(me.id, other.id).connect();
-    return s;
-  }, [me, other]);
+  const socket = useMemo(
+    () => getPersonalSocket(me.id, other.id),
+    [me.id, other.id]
+  );
 
   useEffect(() => {
-    socket.on("personal_message", (msg: Message) => {
-      setMessages((m) => [...m, msg]);
-    });
+    if (!socket.connected) socket.connect();
+
+    const handler = (msg: Message) => {
+      setMessages((prev) => [...prev, msg]);
+    };
+
+    socket.on("personal_message", handler);
+
     return () => {
+      socket.off("personal_message", handler);
       socket.disconnect();
     };
   }, [socket]);
@@ -72,7 +78,7 @@ function Chat({ other, me, onlineUserIds }: ChatProps) {
     setMessages((prev) => [
       ...prev,
       {
-        id: Date.now(),
+        id: Date.now() + Math.floor(Math.random() * 10000),
         senderId: me.id,
         receiverId: other.id,
         content: input.trim(),

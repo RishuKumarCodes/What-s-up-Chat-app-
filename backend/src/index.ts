@@ -25,13 +25,16 @@ async function main() {
     },
   });
 
-  const pubClient = createClient({ url: process.env.REDIS_URL! });
-  const subClient = pubClient.duplicate();
-  await pubClient.connect();
-  await subClient.connect();
-  console.log("✅ Redis adapter ready:", pubClient.isOpen, subClient.isOpen);
-
-  io.adapter(createAdapter(pubClient, subClient));
+  if (process.env.NODE_ENV === "production") {
+    const pubClient = createClient({ url: process.env.REDIS_URL! });
+    const subClient = pubClient.duplicate();
+    await pubClient.connect();
+    await subClient.connect();
+    console.log("✅ Redis adapter ready:", pubClient.isOpen, subClient.isOpen);
+    io.adapter(createAdapter(pubClient, subClient));
+  } else {
+    console.log("⚠️ Running without Redis adapter (in-memory only)");
+  }
 
   instrument(io, {
     auth: false,

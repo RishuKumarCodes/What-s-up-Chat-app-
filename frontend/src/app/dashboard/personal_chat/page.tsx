@@ -19,7 +19,6 @@ export default function PersonalChat() {
 
   useEffect(() => {
     if (status !== "authenticated" || !session || !session.user) return;
-
     const sock = getPersonalSocket(
       Number(session.user.id),
       Number(session.user.id)
